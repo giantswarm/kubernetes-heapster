@@ -36,7 +36,7 @@ spec:
     spec:
       containers:
       - name: heapster
-        image: kubernetes/heapster
+        image: kubernetes/heapster:canary
         imagePullPolicy: Always
         command:
         - /heapster
