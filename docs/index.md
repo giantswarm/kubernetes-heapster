@@ -1,7 +1,7 @@
 +++
 title = "Adding Metrics with Heapster"
-description = "Recipe to spin up a private Docker Registry on Kubernetes."
-date = "2016-09-30"
+description = "Recipe to get the Heapster monitoring solution running."
+date = "2016-10-10"
 type = "page"
 weight = 140
 categories = ["recipes"]
