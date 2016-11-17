@@ -4,7 +4,6 @@ metadata:
   labels:
     k8s-app: heapster
     name: heapster
-    version: v6
   name: heapster
   namespace: kube-system
 spec:
