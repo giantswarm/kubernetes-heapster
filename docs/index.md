@@ -4,7 +4,7 @@ description = "Recipe to get the Heapster monitoring solution running."
 date = "2016-10-10"
 type = "page"
 weight = 140
-categories = ["recipes"]
+tags = ["recipe"]
 +++
 
 # Adding Metrics with Heapster
