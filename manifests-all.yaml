@@ -39,11 +39,9 @@ spec:
     targetPort: 8082
   selector:
     k8s-app: heapster
-    ---
+---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: heapster
   namespace: kube-system
----
-# Derived from ./manifests
