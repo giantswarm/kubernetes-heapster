@@ -1,9 +1,6 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  labels:
-    k8s-app: heapster
-    name: heapster
   name: heapster
   namespace: kube-system
 spec:
@@ -11,20 +8,14 @@ spec:
   template:
     metadata:
       labels:
+        task: monitoring
         k8s-app: heapster
     spec:
+      serviceAccountName: heapster
       containers:
       - name: heapster
-        image: gcr.io/google_containers/heapster:v1.2.0
-        imagePullPolicy: Always
+        image: gcr.io/google_containers/heapster-amd64:v1.3.0
+        imagePullPolicy: IfNotPresent
         command:
         - /heapster
         - --source=kubernetes:https://kubernetes.default
-        volumeMounts:
-        - name: ssl-certs
-          mountPath: /etc/ssl/certs
-          readOnly: true
-      volumes:
-      - name: ssl-certs
-        hostPath:
-          path: /etc/ssl/certs
