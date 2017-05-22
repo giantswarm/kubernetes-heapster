@@ -3,9 +3,6 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  labels:
-    k8s-app: heapster
-    name: heapster
   name: heapster
   namespace: kube-system
 spec:
@@ -13,30 +10,27 @@ spec:
   template:
     metadata:
       labels:
+        task: monitoring
         k8s-app: heapster
     spec:
+      serviceAccountName: heapster
       containers:
       - name: heapster
-        image: gcr.io/google_containers/heapster:v1.2.0
-        imagePullPolicy: Always
+        image: gcr.io/google_containers/heapster-amd64:v1.3.0
+        imagePullPolicy: IfNotPresent
         command:
         - /heapster
         - --source=kubernetes:https://kubernetes.default
-        volumeMounts:
-        - name: ssl-certs
-          mountPath: /etc/ssl/certs
-          readOnly: true
-      volumes:
-      - name: ssl-certs
-        hostPath:
-          path: /etc/ssl/certs
 ---
 apiVersion: v1
 kind: Service
 metadata:
   labels:
-    k8s-app: heapster
-    name: heapster
+    task: monitoring
+    # For use as a Cluster add-on (https://github.com/kubernetes/kubernetes/tree/master/cluster/addons)
+    # If you are NOT using this as an addon, you should comment out this line.
+    kubernetes.io/cluster-service: 'true'
+    kubernetes.io/name: Heapster
   name: heapster
   namespace: kube-system
 spec:
@@ -45,3 +39,9 @@ spec:
     targetPort: 8082
   selector:
     k8s-app: heapster
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: heapster
+  namespace: kube-system
